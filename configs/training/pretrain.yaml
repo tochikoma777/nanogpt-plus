@@ -1,0 +1,28 @@
+# 训练设置
+max_iters: 100000
+batch_size: 12
+gradient_accumulation_steps: 1
+block_size: 1024  # 序列长度
+
+# 优化器
+learning_rate: 6.0e-4
+weight_decay: 0.1
+beta1: 0.9
+beta2: 0.95
+grad_clip: 1.0
+
+# 学习率调度
+lr_scheduler: "cosine"
+warmup_iters: 2000
+min_lr: 6.0e-5
+
+# 评估与保存
+eval_interval: 1000
+eval_iters: 200
+log_interval: 10
+checkpoint_interval: 5000
+
+# 系统
+device: "cuda"
+compile: true  # PyTorch 2.0编译优化
+dtype: "bfloat16"  # 混合精度

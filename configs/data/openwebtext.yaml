@@ -1,0 +1,13 @@
+name: "openwebtext"
+dataset_path: "openwebtext"  # HuggingFace数据集名
+tokenizer: "gpt2"  # tiktoken编码
+text_column: "text"
+
+# 预处理
+block_size: 1024
+stride: 1024  # 滑动窗口步长
+
+# 加载
+num_workers: 4
+pin_memory: true
+shuffle: true

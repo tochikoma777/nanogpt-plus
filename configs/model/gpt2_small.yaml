@@ -1,0 +1,8 @@
+name: "gpt2-small"
+vocab_size: 50257
+block_size: 1024  # 上下文长度
+n_layer: 12      # Transformer层数
+n_head: 12       # 注意力头数
+n_embd: 768      # 嵌入维度
+dropout: 0.1
+bias: false      # 是否使用偏置
