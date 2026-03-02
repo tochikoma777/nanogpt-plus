@@ -60,6 +60,7 @@ class Trainer:
         # 设备设置
         self.device = torch.device(config.device)
         self.model.to(self.device)
+        self.device_type = "cuda" if self.device.type == "cuda" else "cpu"
         
         # 优化器
         if optimizer is None:
@@ -122,7 +123,7 @@ class Trainer:
         y = batch["labels"].to(self.device)
         
         # 混合精度上下文
-        with autocast(enabled=self.use_amp, dtype=self.dtype):
+        with autocast(device_type=self.device_type, enabled=self.use_amp, dtype=self.dtype):
             logits, loss = self.model(x, y)
             loss = loss / self.config.gradient_accumulation_steps
         
@@ -177,7 +178,7 @@ class Trainer:
                 x = batch["input_ids"].to(self.device)
                 y = batch["labels"].to(self.device)
                 
-                with autocast(enabled=self.use_amp, dtype=self.dtype):
+                with autocast(device_type=self.device_type, enabled=self.use_amp, dtype=self.dtype):
                     logits, loss = self.model(x, y)
                 
                 total_loss += loss.item()
