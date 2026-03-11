@@ -347,7 +347,7 @@ class GPT(nn.Module):
             loss = F.cross_entropy(
                 logits.view(-1, logits.size(-1)),
                 targets.view(-1),
-                ignore_index=-1  # 忽略填充位置（如果有）
+                ignore_index=-100  # 忽略填充位置（如果有）
             )
         
         return logits, loss
@@ -396,7 +396,7 @@ class GPT(nn.Module):
             idx_cond = idx if idx.size(1) <= self.config.block_size else idx[:, -self.config.block_size:]
             
             # 前向传播获取预测
-            logits, _ = self(idx_cond)
+            logits, _ = self.forward(idx_cond)
             
             # 只取最后一个位置的预测（预测下一个token）
             logits = logits[:, -1, :]  # (batch_size, vocab_size)
