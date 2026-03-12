@@ -116,13 +116,13 @@ class LoRALinear(nn.Module):
             if self.merge_weights and self.merged:
                 # 从权重中减去LoRA部分
                 # 注意：需要转置因为PyTorch线性层是(out, in)
-                self.weight.data -= (self.lora_B @ self.lora_A.T).T * self.scaling
+                self.weight.data -= (self.lora_A @ self.lora_B).T * self.scaling
                 self.merged = False
         else:
             # 评估模式：如果要求合并且未合并，则合并
             if self.merge_weights and not self.merged:
                 # 把LoRA权重加到原权重上
-                self.weight.data += (self.lora_B @ self.lora_A.T).T * self.scaling
+                self.weight.data += (self.lora_A @ self.lora_B).T * self.scaling
                 self.merged = True
         
         return self
