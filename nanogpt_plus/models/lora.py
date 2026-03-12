@@ -165,7 +165,7 @@ class LoRALinear(nn.Module):
         merged_linear = nn.Linear(self.in_features, self.out_features, bias=self.bias is not None)
         
         # 复制合并后的权重
-        merged_weight = self.weight.data + (self.lora_B @ self.lora_A.T).T * self.scaling
+        merged_weight = self.weight.data + (self.lora_A @ self.lora_B).T * self.scaling
         merged_linear.weight.data.copy_(merged_weight)
         
         if self.bias is not None:
